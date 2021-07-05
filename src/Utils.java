@@ -18,7 +18,8 @@ public class Utils {
         System.out.println("[4] - Lançar uma resultado venda");
         System.out.println("[5] - Lançar uma taxa de serviço");
         System.out.println("[6] - Alterar detalhes de um empregado");
-        System.out.println("[7] - Sair da aplicação");
+        System.out.println("[7] - Exibir empregados");
+        System.out.println("[8] - Sair da aplicação");
         System.out.println("");
     }
 }

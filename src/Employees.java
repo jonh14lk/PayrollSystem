@@ -8,8 +8,8 @@ public class Employees {
     private int current_id;
 
     public Employees() {
-        employees = new HashMap<>();
-        current_id = 0;
+        this.employees = new HashMap<>();
+        this.current_id = 0;
     }
 
     public boolean create_employee() {
@@ -34,12 +34,11 @@ public class Employees {
             return false;
         }
 
-        employee = new Employee(name, address, ++current_id);
-        employees.put(employee.id, employee);
+        employee = new Employee(name, address, ++this.current_id, type);
+        this.employees.put(employee.id, employee);
 
         System.out.println("Funcionario criado com sucesso!");
         System.out.println("Id do funcionario criado:" + employee.id);
-        System.out.println("");
 
         return true;
     }
@@ -48,15 +47,14 @@ public class Employees {
         System.out.println("Id do funcionario:");
         int id = Utils.scan.nextInt();
 
-        if (!employees.containsKey(id)) {
+        if (!this.employees.containsKey(id)) {
             System.out.println("O id do funcionario não existe");
             System.out.println("O funcionario não pode ser removido!\n");
             return false;
         }
 
-        employees.remove(id);
+        this.employees.remove(id);
         System.out.println("Funcionario removido com sucesso!\n");
-        System.out.println("");
 
         return true;
     }
@@ -65,18 +63,17 @@ public class Employees {
         System.out.println("Id do funcionario:");
         int id = Utils.scan.nextInt();
 
-        if (!employees.containsKey(id)) {
+        if (!this.employees.containsKey(id)) {
             System.out.println("O id do funcionario não existe");
             System.out.println("O funcionario não pode ser editado!\n");
             return false;
         }
 
-        Employee employee = employees.get(id);
-        Employee new_employee = new Employee();
+        Employee employee = this.employees.get(id);
 
         System.out.println("Funcionario encontrado!");
         System.out.println("Informações atuais:");
-        print_employee(employee);
+        employee.print_employee();
 
         Utils.scan.nextLine();
         System.out.println("Nome do funcionario:");
@@ -91,34 +88,54 @@ public class Employees {
         System.out.println("Digite 3 para comissionado");
         int type = Utils.scan.nextInt();
 
-        if (!new_employee.set_type(type)) {
+        if (!employee.set_type(type)) {
             System.out.println("O tipo de funcionario digitado não existe");
             System.out.println("O funcionario não pode ser editado!\n");
             return false;
         }
 
-        employees.remove(employee.id);
-        new_employee = new Employee(name, address, employee.id);
-        employees.put(new_employee.id, new_employee);
+        employee = new Employee(name, address, id, type);
         System.out.println("Funcionario editado com sucesso!\n");
-        System.out.println("");
 
         return true;
     }
 
-    public void print_employee(Employee employee) {
-        System.out.println("Nome: " + employee.name);
-        System.out.println("Endereço: " + employee.address);
-        System.out.println("Tipo: " + employee.get_type());
-        System.out.println("Id: " + employee.id);
-        System.out.println("");
+    public boolean throw_time_card() {
+        System.out.println("Id do funcionario:");
+        int id = Utils.scan.nextInt();
+
+        if (!this.employees.containsKey(id)) {
+            System.out.println("O id do funcionario não existe");
+            System.out.println("O cartão de ponto não pode ser adicionado!\n");
+            return false;
+        }
+
+        Employee employee = this.employees.get(id);
+
+        if (!employee.get_hourly()) {
+            System.out.println("O funcionario não é horista");
+            System.out.println("O cartão de ponto não pode ser adicionado!\n");
+            return false;
+        }
+
+        System.out.println("Digite a quantidade de horas trabalhadas:");
+        int hours = Utils.scan.nextInt();
+
+        if (!employee.add_hours(hours)) {
+            System.out.println("A quantidade de horas não pode ser negativa");
+            System.out.println("O cartão de ponto não pode ser adicionado!\n");
+            return false;
+        }
+
+        System.out.println("Cartão de ponto adicionado com sucesso!\n");
+        return true;
     }
 
     public void print_employees() {
-        for (Map.Entry<Integer, Employee> e : employees.entrySet()) {
-            print_employee(e.getValue());
+        for (Map.Entry<Integer, Employee> e : this.employees.entrySet()) {
+            Employee employee = e.getValue();
+            employee.print_employee();
         }
         System.out.println("");
     }
 }
-// TODO: print_employee pode ir pra classe employee
