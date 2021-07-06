@@ -6,6 +6,7 @@ public class Employee {
     private int type;
     private boolean hourly, salaried, commissioned;
     private int hours, extra_hours;
+    private double comission;
 
     public Employee() {
         this.name = "";
@@ -68,11 +69,36 @@ public class Employee {
         return true;
     }
 
+    public boolean add_comission(double value, double percentage) {
+        if (!(percentage >= 0.0 && percentage <= 100.0)) {
+            return false;
+        }
+        percentage /= 100;
+        value *= percentage;
+        this.comission += value;
+        return true;
+    }
+
     public void print_employee() {
         System.out.println("Nome: " + this.name);
         System.out.println("Endereço: " + this.address);
-        System.out.println("Tipo: " + this.type);
         System.out.println("Id: " + this.id);
+        switch (type) {
+            case 1:
+                System.out.println("Tipo: Horista");
+                System.out.println("Horas Normais: " + this.hours);
+                System.out.println("Horas Extras: " + this.extra_hours);
+                break;
+            case 2:
+                System.out.println("Tipo: Assalariado");
+                break;
+            case 3:
+                System.out.println("Tipo: Comissionado");
+                System.out.println("Comissão: " + this.comission);
+                break;
+            default:
+                break;
+        }
         System.out.println("");
     }
 }

@@ -13,7 +13,6 @@ public class Employees {
     }
 
     public boolean create_employee() {
-        Utils.scan.nextLine();
         System.out.println("Nome do funcionario:");
         String name = Utils.scan.nextLine();
 
@@ -25,6 +24,7 @@ public class Employees {
         System.out.println("Digite 2 para assalariado");
         System.out.println("Digite 3 para comissionado");
         int type = Utils.scan.nextInt();
+        Utils.scan.nextLine();
 
         Employee employee = new Employee();
 
@@ -46,6 +46,7 @@ public class Employees {
     public boolean remove_employee() {
         System.out.println("Id do funcionario:");
         int id = Utils.scan.nextInt();
+        Utils.scan.nextLine();
 
         if (!this.employees.containsKey(id)) {
             System.out.println("O id do funcionario não existe");
@@ -62,6 +63,7 @@ public class Employees {
     public boolean edit_employee() {
         System.out.println("Id do funcionario:");
         int id = Utils.scan.nextInt();
+        Utils.scan.nextLine();
 
         if (!this.employees.containsKey(id)) {
             System.out.println("O id do funcionario não existe");
@@ -75,7 +77,6 @@ public class Employees {
         System.out.println("Informações atuais:");
         employee.print_employee();
 
-        Utils.scan.nextLine();
         System.out.println("Nome do funcionario:");
         String name = Utils.scan.nextLine();
 
@@ -87,6 +88,7 @@ public class Employees {
         System.out.println("Digite 2 para assalariado");
         System.out.println("Digite 3 para comissionado");
         int type = Utils.scan.nextInt();
+        Utils.scan.nextLine();
 
         if (!employee.set_type(type)) {
             System.out.println("O tipo de funcionario digitado não existe");
@@ -103,6 +105,7 @@ public class Employees {
     public boolean throw_time_card() {
         System.out.println("Id do funcionario:");
         int id = Utils.scan.nextInt();
+        Utils.scan.nextLine();
 
         if (!this.employees.containsKey(id)) {
             System.out.println("O id do funcionario não existe");
@@ -120,6 +123,7 @@ public class Employees {
 
         System.out.println("Digite a quantidade de horas trabalhadas:");
         int hours = Utils.scan.nextInt();
+        Utils.scan.nextLine();
 
         if (!employee.add_hours(hours)) {
             System.out.println("A quantidade de horas não pode ser negativa");
@@ -128,6 +132,49 @@ public class Employees {
         }
 
         System.out.println("Cartão de ponto adicionado com sucesso!\n");
+        return true;
+    }
+
+    public boolean add_sale() {
+        System.out.println("Id do funcionario:");
+        int id = Utils.scan.nextInt();
+        Utils.scan.nextLine();
+
+        if (!this.employees.containsKey(id)) {
+            System.out.println("O id do funcionario não existe");
+            System.out.println("A venda não pode ser adicionada!\n");
+            return false;
+        }
+
+        Employee employee = this.employees.get(id);
+
+        if (!employee.get_comissioned()) {
+            System.out.println("O funcionario não é comissiondo");
+            System.out.println("A venda não pode ser adicionada!\n");
+            return false;
+        }
+
+        System.out.println("Digite o valor da venda:");
+        double value = Utils.scan.nextDouble();
+        Utils.scan.nextLine();
+
+        if (value < 0.0) {
+            System.out.println("O valor não pode ser negativo");
+            System.out.println("A venda não pode ser adicionada!\n");
+            return false;
+        }
+
+        System.out.println("Digite o percentual destinado ao funcionario:");
+        double percentage = Utils.scan.nextDouble();
+        Utils.scan.nextLine();
+
+        if (!employee.add_comission(value, percentage)) {
+            System.out.println("O percentual precisa estar no intervalo [0, 100]");
+            System.out.println("A venda não pode ser adicionada!\n");
+            return false;
+        }
+
+        System.out.println("Venda adicionada com sucesso!\n");
         return true;
     }
 

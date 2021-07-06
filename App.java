@@ -11,6 +11,7 @@ public class App {
             System.out.println("Digite um comando:\n");
 
             int command = Utils.scan.nextInt();
+            Utils.scan.nextLine();
             boolean can_quit = false;
 
             switch (command) {
@@ -27,7 +28,7 @@ public class App {
                     employees.throw_time_card();
                     break;
                 case 4:
-                    System.out.println("Lançar um resultado venda\n");
+                    employees.add_sale();
                     break;
                 case 5:
                     System.out.println("Lançar taxa de serviço\n");
