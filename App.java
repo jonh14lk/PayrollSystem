@@ -1,9 +1,9 @@
-import src.Employees;
+import src.Company;
 import src.Utils;
 
 public class App {
     App() {
-        Employees employees = new Employees();
+        Company company = new Company();
         Utils.clear_screen();
 
         while (true) {
@@ -19,25 +19,25 @@ public class App {
                     Utils.print_help();
                     break;
                 case 1:
-                    employees.create_employee();
+                    company.create_employee();
                     break;
                 case 2:
-                    employees.remove_employee();
+                    company.remove_employee();
                     break;
                 case 3:
-                    employees.throw_time_card();
+                    company.throw_time_card();
                     break;
                 case 4:
-                    employees.add_sale();
+                    company.add_sale();
                     break;
                 case 5:
-                    System.out.println("Lançar taxa de serviço\n");
+                    company.add_service_charge();
                     break;
                 case 6:
-                    employees.edit_employee();
+                    company.edit_employee();
                     break;
                 case 7:
-                    employees.print_employees();
+                    company.print_employees();
                     break;
                 case 8:
                     System.out.println("Saindo...\n");

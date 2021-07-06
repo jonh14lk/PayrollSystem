@@ -4,8 +4,9 @@ public class Employee {
     public String name, address;
     public int id;
     private int type;
-    private boolean hourly, salaried, commissioned;
-    private int hours, extra_hours;
+    private boolean hourly, salaried;
+    private boolean commissioned, from_syndicate;
+    private int hours, extra_hours, syndicate_employee_id;
     private double comission;
 
     public Employee() {
@@ -15,11 +16,14 @@ public class Employee {
         this.type = 1;
     }
 
-    public Employee(String name, String address, int id, int type) {
+    public Employee(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate) {
         this.set_type(type);
         this.name = name;
         this.address = address;
         this.id = id;
+        if (from_syndicate == 1) {
+            set_syndicate(syndicate);
+        }
     }
 
     public boolean set_type(int type) {
@@ -46,6 +50,19 @@ public class Employee {
                 break;
         }
         return false;
+    }
+
+    public void set_syndicate(Syndicate syndicate) {
+        this.from_syndicate = true;
+        this.syndicate_employee_id = syndicate.create_syndicate_employee();
+    }
+
+    public boolean get_syndicate(Syndicate syndicate) {
+        return this.from_syndicate;
+    }
+
+    public int get_syndicate_employee_id() {
+        return this.syndicate_employee_id;
     }
 
     public boolean get_hourly() {
@@ -98,6 +115,9 @@ public class Employee {
                 break;
             default:
                 break;
+        }
+        if (this.from_syndicate) {
+            System.out.println("Id do funcionario no sindicato :" + this.syndicate_employee_id);
         }
         System.out.println("");
     }
