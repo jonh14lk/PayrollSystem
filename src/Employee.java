@@ -17,16 +17,16 @@ public class Employee {
     }
 
     public Employee(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate) {
-        this.set_type(type);
+        this.setType(type);
         this.name = name;
         this.address = address;
         this.id = id;
         if (from_syndicate == 1) {
-            set_syndicate(syndicate);
+            setSyndicate(syndicate);
         }
     }
 
-    public boolean set_type(int type) {
+    public boolean setType(int type) {
         switch (type) {
             case 1:
                 this.type = type;
@@ -52,32 +52,32 @@ public class Employee {
         return false;
     }
 
-    public void set_syndicate(Syndicate syndicate) {
+    public void setSyndicate(Syndicate syndicate) {
         this.from_syndicate = true;
-        this.syndicate_employee_id = syndicate.create_syndicate_employee();
+        this.syndicate_employee_id = syndicate.createSyndicateEmployee();
     }
 
-    public boolean get_syndicate(Syndicate syndicate) {
+    public boolean getSyndicate(Syndicate syndicate) {
         return this.from_syndicate;
     }
 
-    public int get_syndicate_employee_id() {
+    public int getSyndicateEmployeeId() {
         return this.syndicate_employee_id;
     }
 
-    public boolean get_hourly() {
+    public boolean getHourly() {
         return this.hourly;
     }
 
-    public boolean get_salaried() {
+    public boolean getSalaried() {
         return this.salaried;
     }
 
-    public boolean get_comissioned() {
+    public boolean getComissioned() {
         return this.commissioned;
     }
 
-    public boolean add_hours(int hours) {
+    public boolean addHours(int hours) {
         if (hours < 0) {
             return false;
         }
@@ -86,7 +86,7 @@ public class Employee {
         return true;
     }
 
-    public boolean add_comission(double value, double percentage) {
+    public boolean addComission(double value, double percentage) {
         if (!(percentage >= 0.0 && percentage <= 100.0)) {
             return false;
         }
@@ -96,7 +96,7 @@ public class Employee {
         return true;
     }
 
-    public void print_employee() {
+    public void printEmployee() {
         System.out.println("Nome: " + this.name);
         System.out.println("Endereço: " + this.address);
         System.out.println("Id: " + this.id);

@@ -14,7 +14,7 @@ public class Company {
         this.current_id = 0;
     }
 
-    public boolean create_employee() {
+    public boolean createEmployee() {
         System.out.println("Nome do funcionario:");
         String name = Utils.scan.nextLine();
 
@@ -30,7 +30,7 @@ public class Company {
 
         Employee employee = new Employee();
 
-        if (!employee.set_type(type)) {
+        if (!employee.setType(type)) {
             System.out.println("O tipo de funcionario digitado não existe");
             System.out.println("O funcionario não pode ser criado!\n");
             return false;
@@ -52,14 +52,14 @@ public class Company {
 
         System.out.println("Funcionario criado com sucesso!");
         System.out.println("Id do funcionario criado:" + employee.id);
-        if (employee.get_syndicate(this.syndicate)) {
-            System.out.println("Id do funcionario criado no sindicato:" + employee.get_syndicate_employee_id());
+        if (employee.getSyndicate(this.syndicate)) {
+            System.out.println("Id do funcionario criado no sindicato:" + employee.getSyndicateEmployeeId());
         }
 
         return true;
     }
 
-    public boolean remove_employee() {
+    public boolean removeEmployee() {
         System.out.println("Id do funcionario:");
         int id = Utils.scan.nextInt();
         Utils.scan.nextLine();
@@ -72,14 +72,14 @@ public class Company {
 
         Employee employee = this.employees.get(id);
 
-        this.syndicate.remove_syndicate_employee(employee.get_syndicate_employee_id());
+        this.syndicate.removeSyndicateEmployee(employee.getSyndicateEmployeeId());
         this.employees.remove(id);
         System.out.println("Funcionario removido com sucesso!\n");
 
         return true;
     }
 
-    public boolean edit_employee() {
+    public boolean editEmployee() {
         System.out.println("Id do funcionario:");
         int id = Utils.scan.nextInt();
         Utils.scan.nextLine();
@@ -94,7 +94,7 @@ public class Company {
 
         System.out.println("Funcionario encontrado!");
         System.out.println("Informações atuais:");
-        employee.print_employee();
+        employee.printEmployee();
 
         System.out.println("Nome do funcionario:");
         String name = Utils.scan.nextLine();
@@ -109,7 +109,7 @@ public class Company {
         int type = Utils.scan.nextInt();
         Utils.scan.nextLine();
 
-        if (!employee.set_type(type)) {
+        if (!employee.setType(type)) {
             System.out.println("O tipo de funcionario digitado não existe");
             System.out.println("O funcionario não pode ser editado!\n");
             return false;
@@ -117,7 +117,7 @@ public class Company {
 
         int from_syndicate = 1;
 
-        if (!employee.get_syndicate(syndicate)) {
+        if (!employee.getSyndicate(syndicate)) {
             System.out.println("Caso queria adicionar o funcionario ao sindicato, Digite 1");
             System.out.println("Caso contrário, digite 0");
             from_syndicate = Utils.scan.nextInt();
@@ -135,7 +135,7 @@ public class Company {
         return true;
     }
 
-    public boolean throw_time_card() {
+    public boolean throwTimeCard() {
         System.out.println("Id do funcionario:");
         int id = Utils.scan.nextInt();
         Utils.scan.nextLine();
@@ -148,7 +148,7 @@ public class Company {
 
         Employee employee = this.employees.get(id);
 
-        if (!employee.get_hourly()) {
+        if (!employee.getHourly()) {
             System.out.println("O funcionario não é horista");
             System.out.println("O cartão de ponto não pode ser adicionado!\n");
             return false;
@@ -158,7 +158,7 @@ public class Company {
         int hours = Utils.scan.nextInt();
         Utils.scan.nextLine();
 
-        if (!employee.add_hours(hours)) {
+        if (!employee.addHours(hours)) {
             System.out.println("A quantidade de horas não pode ser negativa");
             System.out.println("O cartão de ponto não pode ser adicionado!\n");
             return false;
@@ -168,7 +168,7 @@ public class Company {
         return true;
     }
 
-    public boolean add_sale() {
+    public boolean addSale() {
         System.out.println("Id do funcionario:");
         int id = Utils.scan.nextInt();
         Utils.scan.nextLine();
@@ -181,7 +181,7 @@ public class Company {
 
         Employee employee = this.employees.get(id);
 
-        if (!employee.get_comissioned()) {
+        if (!employee.getComissioned()) {
             System.out.println("O funcionario não é comissiondo");
             System.out.println("A venda não pode ser adicionada!\n");
             return false;
@@ -201,7 +201,7 @@ public class Company {
         double percentage = Utils.scan.nextDouble();
         Utils.scan.nextLine();
 
-        if (!employee.add_comission(value, percentage)) {
+        if (!employee.addComission(value, percentage)) {
             System.out.println("O percentual precisa estar no intervalo [0, 100]");
             System.out.println("A venda não pode ser adicionada!\n");
             return false;
@@ -211,7 +211,7 @@ public class Company {
         return true;
     }
 
-    public boolean add_service_charge() {
+    public boolean addServiceCharge() {
         System.out.println("Id do funcionario no sindicato:");
         int id = Utils.scan.nextInt();
         Utils.scan.nextLine();
@@ -233,16 +233,16 @@ public class Company {
         }
 
         SyndicateEmployee employee = this.syndicate.syndicate_employees.get(id);
-        employee.add_service_charge(charge);
+        employee.addServiceCharge(charge);
         System.out.println("Taxa de serviçadicionada com sucesso!\n");
 
         return true;
     }
 
-    public void print_employees() {
+    public void printEmployees() {
         for (Map.Entry<Integer, Employee> e : this.employees.entrySet()) {
             Employee employee = e.getValue();
-            employee.print_employee();
+            employee.printEmployee();
         }
         System.out.println("");
     }

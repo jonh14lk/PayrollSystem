@@ -11,13 +11,13 @@ public class Syndicate {
         this.current_id = 0;
     }
 
-    public int create_syndicate_employee() {
+    public int createSyndicateEmployee() {
         SyndicateEmployee employee = new SyndicateEmployee(++current_id);
         this.syndicate_employees.put(employee.id, employee);
         return employee.id;
     }
 
-    public void remove_syndicate_employee(int id) {
+    public void removeSyndicateEmployee(int id) {
         this.syndicate_employees.remove(id);
     }
 }

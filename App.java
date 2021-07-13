@@ -4,7 +4,7 @@ import src.Utils;
 public class App {
     App() {
         Company company = new Company();
-        Utils.clear_screen();
+        Utils.clearScreen();
 
         while (true) {
             System.out.println("Para obter uma lista com os comandos, digite 0");
@@ -16,28 +16,28 @@ public class App {
 
             switch (command) {
                 case 0:
-                    Utils.print_help();
+                    Utils.printHelp();
                     break;
                 case 1:
-                    company.create_employee();
+                    company.createEmployee();
                     break;
                 case 2:
-                    company.remove_employee();
+                    company.removeEmployee();
                     break;
                 case 3:
-                    company.throw_time_card();
+                    company.throwTimeCard();
                     break;
                 case 4:
-                    company.add_sale();
+                    company.addSale();
                     break;
                 case 5:
-                    company.add_service_charge();
+                    company.addServiceCharge();
                     break;
                 case 6:
-                    company.edit_employee();
+                    company.editEmployee();
                     break;
                 case 7:
-                    company.print_employees();
+                    company.printEmployees();
                     break;
                 case 8:
                     System.out.println("Saindo...\n");
@@ -47,7 +47,6 @@ public class App {
                     System.out.println("Comando não disponivel\n");
                     break;
             }
-
             if (can_quit) {
                 break;
             }

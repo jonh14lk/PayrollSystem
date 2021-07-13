@@ -5,12 +5,12 @@ import java.util.Scanner;
 public class Utils {
     public static Scanner scan = new Scanner(System.in);
 
-    public static void clear_screen() {
+    public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    public static void print_help() {
+    public static void printHelp() {
         System.out.println("[0] - Ajuda");
         System.out.println("[1] - Adicionar empregado");
         System.out.println("[2] - Remoção de um empregado");
