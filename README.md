@@ -8,8 +8,6 @@
 
 </div>
 
-<br>
-
 # Descrição do projeto :memo:
 
 O objetivo do projeto é construir um sistema de folha de pagamento. O sistema consiste do
