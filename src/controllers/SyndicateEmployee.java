@@ -1,10 +1,10 @@
-package src;
+package src.controllers;
 
 public class SyndicateEmployee {
     public int id;
     private double service_charge;
 
-    SyndicateEmployee(int id) {
+    public SyndicateEmployee(int id) {
         this.id = id;
         this.service_charge = 0;
     }

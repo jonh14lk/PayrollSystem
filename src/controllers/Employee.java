@@ -1,4 +1,6 @@
-package src;
+package src.controllers;
+
+import src.models.Syndicate;
 
 public class Employee {
     public String name, address;

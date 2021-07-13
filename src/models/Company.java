@@ -1,4 +1,8 @@
-package src;
+package src.models;
+
+import src.controllers.Employee;
+import src.controllers.SyndicateEmployee;
+import src.utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;

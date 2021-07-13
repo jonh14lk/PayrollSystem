@@ -1,8 +1,10 @@
-import src.Company;
-import src.Utils;
+package src.app;
+
+import src.models.Company;
+import src.utils.Utils;
 
 public class App {
-    App() {
+    public App() {
         Company company = new Company();
         Utils.clearScreen();
 

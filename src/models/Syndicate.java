@@ -1,4 +1,6 @@
-package src;
+package src.models;
+
+import src.controllers.SyndicateEmployee;
 
 import java.util.HashMap;
 
@@ -6,7 +8,7 @@ public class Syndicate {
     public HashMap<Integer, SyndicateEmployee> syndicate_employees;
     private int current_id;
 
-    Syndicate() {
+    public Syndicate() {
         this.syndicate_employees = new HashMap<>();
         this.current_id = 0;
     }
