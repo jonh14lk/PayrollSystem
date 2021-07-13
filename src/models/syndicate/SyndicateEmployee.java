@@ -1,4 +1,4 @@
-package src.controllers;
+package src.models.syndicate;
 
 public class SyndicateEmployee {
     public int id;

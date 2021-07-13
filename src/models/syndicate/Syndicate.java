@@ -1,6 +1,4 @@
-package src.models;
-
-import src.controllers.SyndicateEmployee;
+package src.models.syndicate;
 
 import java.util.HashMap;
 

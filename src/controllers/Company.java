@@ -1,7 +1,11 @@
-package src.models;
+package src.controllers;
 
-import src.controllers.Employee;
-import src.controllers.SyndicateEmployee;
+import src.models.employee.Hourly;
+import src.models.employee.Salaried;
+import src.models.employee.Comissioned;
+import src.models.employee.Employee;
+import src.models.syndicate.SyndicateEmployee;
+import src.models.syndicate.Syndicate;
 import src.utils.Utils;
 
 import java.util.HashMap;
@@ -9,11 +13,17 @@ import java.util.Map;
 
 public class Company {
     private HashMap<Integer, Employee> employees;
+    private HashMap<Integer, Hourly> hourly;
+    private HashMap<Integer, Salaried> salaried;
+    private HashMap<Integer, Comissioned> comissioned;
     Syndicate syndicate;
     private int current_id;
 
     public Company() {
         this.employees = new HashMap<>();
+        this.hourly = new HashMap<>();
+        this.salaried = new HashMap<>();
+        this.comissioned = new HashMap<>();
         this.syndicate = new Syndicate();
         this.current_id = 0;
     }
@@ -32,14 +42,6 @@ public class Company {
         int type = Utils.scan.nextInt();
         Utils.scan.nextLine();
 
-        Employee employee = new Employee();
-
-        if (!employee.setType(type)) {
-            System.out.println("O tipo de funcionario digitado não existe");
-            System.out.println("O funcionario não pode ser criado!\n");
-            return false;
-        }
-
         System.out.println("Caso o funcionario pertença ao sindicato, Digite 1");
         System.out.println("Caso contrário, digite 0");
         int from_syndicate = Utils.scan.nextInt();
@@ -51,12 +53,38 @@ public class Company {
             return false;
         }
 
-        employee = new Employee(name, address, ++this.current_id, type, from_syndicate, this.syndicate);
+        Employee employee = new Employee();
+
+        switch (type) {
+            case 1:
+                Hourly hourly_employee = new Hourly(name, address, ++this.current_id, type, from_syndicate,
+                        this.syndicate);
+                employee = hourly_employee;
+                this.hourly.put(hourly_employee.id, hourly_employee);
+                break;
+            case 2:
+                Salaried salaried_employee = new Salaried(name, address, ++this.current_id, type, from_syndicate,
+                        this.syndicate);
+                employee = salaried_employee;
+                this.salaried.put(salaried_employee.id, salaried_employee);
+                break;
+            case 3:
+                Comissioned comissioned_employee = new Comissioned(name, address, ++this.current_id, type,
+                        from_syndicate, this.syndicate);
+                employee = comissioned_employee;
+                this.comissioned.put(comissioned_employee.id, comissioned_employee);
+                break;
+            default:
+                System.out.println("O tipo de funcionario digitado não existe");
+                System.out.println("O funcionario não pode ser criado!\n");
+                return false;
+        }
+
         this.employees.put(employee.id, employee);
 
         System.out.println("Funcionario criado com sucesso!");
         System.out.println("Id do funcionario criado:" + employee.id);
-        if (employee.getSyndicate(this.syndicate)) {
+        if (employee.getSyndicate()) {
             System.out.println("Id do funcionario criado no sindicato:" + employee.getSyndicateEmployeeId());
         }
 
@@ -76,11 +104,15 @@ public class Company {
 
         Employee employee = this.employees.get(id);
 
+        this.hourly.remove(id);
+        this.salaried.remove(id);
+        this.comissioned.remove(id);
         this.syndicate.removeSyndicateEmployee(employee.getSyndicateEmployeeId());
         this.employees.remove(id);
         System.out.println("Funcionario removido com sucesso!\n");
 
         return true;
+
     }
 
     public boolean editEmployee() {
@@ -106,22 +138,16 @@ public class Company {
         System.out.println("Endereço do funcionario:");
         String address = Utils.scan.nextLine();
 
-        System.out.println("Digite o tipo de funcionario a ser cadastrado:");
+        System.out.println("Digite o tipo do funcionario:");
         System.out.println("Digite 1 para horista");
         System.out.println("Digite 2 para assalariado");
         System.out.println("Digite 3 para comissionado");
         int type = Utils.scan.nextInt();
         Utils.scan.nextLine();
 
-        if (!employee.setType(type)) {
-            System.out.println("O tipo de funcionario digitado não existe");
-            System.out.println("O funcionario não pode ser editado!\n");
-            return false;
-        }
-
         int from_syndicate = 1;
 
-        if (!employee.getSyndicate(syndicate)) {
+        if (!employee.getSyndicate()) {
             System.out.println("Caso queria adicionar o funcionario ao sindicato, Digite 1");
             System.out.println("Caso contrário, digite 0");
             from_syndicate = Utils.scan.nextInt();
@@ -133,7 +159,30 @@ public class Company {
             }
         }
 
-        employee = new Employee(name, address, id, type, from_syndicate, this.syndicate);
+        switch (type) {
+            case 1:
+                Hourly hourly_employee = this.hourly.get(id);
+                hourly_employee = new Hourly(name, address, ++this.current_id, type, from_syndicate, this.syndicate);
+                employee = hourly_employee;
+                break;
+            case 2:
+                Salaried salaried_employee = this.salaried.get(id);
+                salaried_employee = new Salaried(name, address, ++this.current_id, type, from_syndicate,
+                        this.syndicate);
+                employee = salaried_employee;
+                break;
+            case 3:
+                Comissioned comissioned_employee = this.comissioned.get(id);
+                comissioned_employee = new Comissioned(name, address, ++this.current_id, type, from_syndicate,
+                        this.syndicate);
+                employee = comissioned_employee;
+                break;
+            default:
+                System.out.println("O tipo de funcionario digitado não existe");
+                System.out.println("O funcionario não pode ser criado!\n");
+                return false;
+        }
+
         System.out.println("Funcionario editado com sucesso!\n");
 
         return true;
@@ -158,11 +207,13 @@ public class Company {
             return false;
         }
 
+        Hourly hourly_employee = this.hourly.get(id);
+
         System.out.println("Digite a quantidade de horas trabalhadas:");
         int hours = Utils.scan.nextInt();
         Utils.scan.nextLine();
 
-        if (!employee.addHours(hours)) {
+        if (!hourly_employee.addHours(hours)) {
             System.out.println("A quantidade de horas não pode ser negativa");
             System.out.println("O cartão de ponto não pode ser adicionado!\n");
             return false;
@@ -205,7 +256,9 @@ public class Company {
         double percentage = Utils.scan.nextDouble();
         Utils.scan.nextLine();
 
-        if (!employee.addComission(value, percentage)) {
+        Comissioned comissioned_employee = this.comissioned.get(id);
+
+        if (!comissioned_employee.addComission(value, percentage)) {
             System.out.println("O percentual precisa estar no intervalo [0, 100]");
             System.out.println("A venda não pode ser adicionada!\n");
             return false;

@@ -1,6 +1,6 @@
 package src.app;
 
-import src.models.Company;
+import src.controllers.Company;
 import src.utils.Utils;
 
 public class App {
