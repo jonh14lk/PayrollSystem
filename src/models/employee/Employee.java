@@ -52,6 +52,9 @@ public class Employee {
     }
 
     public boolean getHourly() {
+        if (!this.hourly) {
+            System.out.println("O funcionario não é horista");
+        }
         return this.hourly;
     }
 
@@ -60,6 +63,9 @@ public class Employee {
     }
 
     public boolean getComissioned() {
+        if (this.commissioned == false) {
+            System.out.println("O funcionario não é comissiondo");
+        }
         return this.commissioned;
     }
 

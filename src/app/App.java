@@ -12,8 +12,7 @@ public class App {
             System.out.println("Para obter uma lista com os comandos, digite 0");
             System.out.println("Digite um comando:\n");
 
-            int command = Utils.scan.nextInt();
-            Utils.scan.nextLine();
+            int command = Utils.readInt();
             boolean can_quit = false;
 
             switch (command) {

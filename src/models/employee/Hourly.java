@@ -19,10 +19,12 @@ public class Hourly extends Employee {
 
     public boolean addHours(int hours) {
         if (hours < 0) {
+            System.out.println("A quantidade de horas não pode ser negativa");
             return false;
         }
         this.hours += Math.min(hours, 8);
         this.extra_hours += Math.max(0, hours - 8);
+        System.out.println("Cartão de ponto adicionado com sucesso!\n");
         return true;
     }
 

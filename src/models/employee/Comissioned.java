@@ -17,12 +17,17 @@ public class Comissioned extends Employee {
     }
 
     public boolean addComission(double value, double percentage) {
-        if (!(percentage >= 0.0 && percentage <= 100.0)) {
+        if (value < 0.0) {
+            System.out.println("O valor não pode ser negativo");
+            return false;
+        } else if (!(percentage >= 0.0 && percentage <= 100.0)) {
+            System.out.println("O percentual precisa estar no intervalo [0, 100]");
             return false;
         }
         percentage /= 100;
         value *= percentage;
         this.comission += value;
+        System.out.println("Venda adicionada com sucesso!\n");
         return true;
     }
 
