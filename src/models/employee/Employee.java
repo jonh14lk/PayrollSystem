@@ -1,37 +1,50 @@
 package src.models.employee;
 
 import src.models.syndicate.Syndicate;
+import java.util.Calendar;
 
 public class Employee {
     public String name, address;
     public int id;
     private boolean hourly, salaried, commissioned;
     private boolean from_syndicate;
-    private int syndicate_employee_id;
-    private int paymentType;
+    private int syndicate_employee_id, payment_type;
+    private Calendar last_payment;
 
     public Employee(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate,
-            int paymentType) {
+            int payment_type) {
         this.name = name;
         this.address = address;
         this.id = id;
         this.setType(type);
-        this.setPayment(paymentType);
+        this.setPaymentType(payment_type);
+        this.setLastPayment(1, 1, 2021);
         if (from_syndicate == 1) {
             setSyndicate(syndicate);
         }
     }
 
-    public boolean setPayment(int paymentType) {
-        if (paymentType >= 1 && paymentType <= 3) {
-            this.paymentType = paymentType;
+    public void setLastPayment(int day, int month, int year) {
+        this.last_payment = Calendar.getInstance();
+        this.last_payment.set(Calendar.YEAR, year);
+        this.last_payment.set(Calendar.MONTH, month);
+        this.last_payment.set(Calendar.DAY_OF_MONTH, day);
+    }
+
+    public Calendar getLastPayment() {
+        return this.last_payment;
+    }
+
+    public boolean setPaymentType(int payment_type) {
+        if (payment_type >= 1 && payment_type <= 3) {
+            this.payment_type = payment_type;
             return true;
         }
         return false;
     }
 
-    public int getPayment(int paymentType) {
-        return this.paymentType;
+    public int getPaymentType(int paymentType) {
+        return this.payment_type;
     }
 
     public boolean setType(int type) {
@@ -93,11 +106,10 @@ public class Employee {
         System.out.println("Endereço: " + this.address);
         System.out.println("Id: " + this.id);
         this.printPaymentType();
-        System.out.println("");
     }
 
     public void printPaymentType() {
-        switch (this.paymentType) {
+        switch (this.payment_type) {
             case 1:
                 System.out.println("Pagamento: Cheque pelos correios");
                 break;
@@ -108,5 +120,13 @@ public class Employee {
                 System.out.println("Pagamento: Depósito em conta bancária");
                 break;
         }
+    }
+
+    public void payEmployee(Calendar current_date, Syndicate syndicate) {
+        System.out.println("Nome: " + this.name);
+        System.out.println("Id: " + this.id);
+        printPaymentType();
+        this.setLastPayment(current_date.get(Calendar.DAY_OF_MONTH), current_date.get(Calendar.MONTH),
+                current_date.get(Calendar.YEAR));
     }
 }

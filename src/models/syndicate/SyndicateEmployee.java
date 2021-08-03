@@ -10,12 +10,12 @@ public class SyndicateEmployee {
     }
 
     public boolean addServiceCharge(double charge) {
-        if (charge < 0) {
-            System.out.println("O valor não pode ser negativo");
-            return false;
-        }
         this.service_charge += charge;
         System.out.println("Taxa de serviço adicionada com sucesso!\n");
         return true;
+    }
+
+    public double getServiceCharge() {
+        return this.service_charge;
     }
 }

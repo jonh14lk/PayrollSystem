@@ -38,9 +38,12 @@ public class App {
                     company.editEmployee();
                     break;
                 case 7:
-                    company.printEmployees();
+                    company.RunPayroll();
                     break;
                 case 8:
+                    company.printEmployees();
+                    break;
+                case 9:
                     System.out.println("Saindo...\n");
                     can_quit = true;
                     break;
