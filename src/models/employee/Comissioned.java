@@ -2,17 +2,12 @@ package src.models.employee;
 
 import src.models.syndicate.Syndicate;
 
-public class Comissioned extends Employee {
+public class Comissioned extends Salaried {
     private double comission;
 
-    public Comissioned(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate) {
-        this.name = name;
-        this.address = address;
-        this.id = id;
-        if (from_syndicate == 1) {
-            setSyndicate(syndicate);
-        }
-        this.setType(type);
+    public Comissioned(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate,
+            double salary, int paymentType) {
+        super(name, address, id, type, from_syndicate, syndicate, salary, paymentType);
         this.comission = 0.0;
     }
 
@@ -37,9 +32,11 @@ public class Comissioned extends Employee {
         System.out.println("Endereço: " + this.address);
         System.out.println("Id: " + this.id);
         System.out.println("Tipo: Comissionado");
+        System.out.println("Salario: " + this.getSalary());
         System.out.println("Comissão: " + this.comission);
+        this.printPaymentType();
         if (getSyndicate()) {
-            System.out.println("Id do funcionario no sindicato :" + getSyndicateEmployeeId());
+            System.out.println("Id do funcionario no sindicato: " + getSyndicateEmployeeId());
         }
         System.out.println("");
     }

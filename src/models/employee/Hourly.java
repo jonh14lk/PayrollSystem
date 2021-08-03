@@ -5,14 +5,9 @@ import src.models.syndicate.Syndicate;
 public class Hourly extends Employee {
     private int hours, extra_hours;
 
-    public Hourly(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate) {
-        this.name = name;
-        this.address = address;
-        this.id = id;
-        if (from_syndicate == 1) {
-            setSyndicate(syndicate);
-        }
-        this.setType(type);
+    public Hourly(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate,
+            int paymentType) {
+        super(name, address, id, type, from_syndicate, syndicate, paymentType);
         this.hours = 0;
         this.extra_hours = 0;
     }
@@ -44,8 +39,9 @@ public class Hourly extends Employee {
         System.out.println("Tipo: Horista");
         System.out.println("Horas Normais: " + this.hours);
         System.out.println("Horas Extras: " + this.extra_hours);
+        this.printPaymentType();
         if (getSyndicate()) {
-            System.out.println("Id do funcionario no sindicato :" + getSyndicateEmployeeId());
+            System.out.println("Id do funcionario no sindicato: " + getSyndicateEmployeeId());
         }
         System.out.println("");
     }

@@ -1,5 +1,6 @@
 package src.utils;
 
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Utils {
@@ -36,16 +37,17 @@ public class Utils {
 
     public static int readEmployeeType() {
         System.out.println("Digite o tipo de funcionario a ser cadastrado:");
-        System.out.println("Digite 1 para horista");
-        System.out.println("Digite 2 para assalariado");
-        System.out.println("Digite 3 para comissionado");
+        System.out.println("[1] - Horista");
+        System.out.println("[2] - Assalariado");
+        System.out.println("[3] - Comissionado");
         int type = readInt();
         return type;
     }
 
     public static int readFromSyndicate() {
-        System.out.println("Caso o funcionario pertença ao sindicato, Digite 1");
-        System.out.println("Caso contrário, digite 0");
+        System.out.println("O funcionário pertence ao sindicato?");
+        System.out.println("[0] - Não");
+        System.out.println("[1] - Sim");
         int from_syndicate = readInt();
         return from_syndicate;
     }
@@ -78,6 +80,29 @@ public class Utils {
         System.out.println("Digite o valor da taxa de serviço:");
         double charge = Utils.readDouble();
         return charge;
+    }
+
+    public static double readSalary() {
+        System.out.println("Digite o salario mensal do funcionário:");
+        double salary = readDouble();
+        return salary;
+    }
+
+    public static int readPaymentType() {
+        System.out.println("Digite o tipo de pagamento do funcionário:");
+        System.out.println("[1] - Cheque pelos correios");
+        System.out.println("[2] - Cheque em mãos");
+        System.out.println("[3] - Depósito em conta bancária");
+        int type = readInt();
+        return type;
+    }
+
+    public static Calendar readDate() {
+        Calendar date = Calendar.getInstance();
+        System.out.println("Digite o dia do pagamento:");
+        int day = readInt();
+        date.set(Calendar.DAY_OF_MONTH, day);
+        return date;
     }
 
     public static void printHelp() {

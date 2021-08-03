@@ -8,11 +8,30 @@ public class Employee {
     private boolean hourly, salaried, commissioned;
     private boolean from_syndicate;
     private int syndicate_employee_id;
+    private int paymentType;
 
-    public Employee() {
-        this.name = "";
-        this.address = "";
-        this.id = 0;
+    public Employee(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate,
+            int paymentType) {
+        this.name = name;
+        this.address = address;
+        this.id = id;
+        this.setType(type);
+        this.setPayment(paymentType);
+        if (from_syndicate == 1) {
+            setSyndicate(syndicate);
+        }
+    }
+
+    public boolean setPayment(int paymentType) {
+        if (paymentType >= 1 && paymentType <= 3) {
+            this.paymentType = paymentType;
+            return true;
+        }
+        return false;
+    }
+
+    public int getPayment(int paymentType) {
+        return this.paymentType;
     }
 
     public boolean setType(int type) {
@@ -73,6 +92,21 @@ public class Employee {
         System.out.println("Nome: " + this.name);
         System.out.println("Endereço: " + this.address);
         System.out.println("Id: " + this.id);
+        this.printPaymentType();
         System.out.println("");
+    }
+
+    public void printPaymentType() {
+        switch (this.paymentType) {
+            case 1:
+                System.out.println("Pagamento: Cheque pelos correios");
+                break;
+            case 2:
+                System.out.println("Pagamento: Cheque em mãos");
+                break;
+            case 3:
+                System.out.println("Pagamento: Depósito em conta bancária");
+                break;
+        }
     }
 }
