@@ -16,6 +16,11 @@ public class Hourly extends Employee {
         this.extra_hours = 0;
     }
 
+    public void editHourly(String name, String address, int id, int type, double salary, int payment_type) {
+        editEmployee(name, address, id, type, payment_type);
+        this.hour_value = salary;
+    }
+
     public boolean addHours(int hours) {
         if (hours < 0) {
             System.out.println("A quantidade de horas não pode ser negativa");

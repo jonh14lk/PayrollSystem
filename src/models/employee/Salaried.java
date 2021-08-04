@@ -10,7 +10,12 @@ public class Salaried extends Employee {
     public Salaried(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate,
             double salary, int payment_type) {
         super(name, address, id, type, from_syndicate, syndicate, payment_type);
-        this.setSalary(salary);
+        this.salary = salary;
+    }
+
+    public void editSalaried(String name, String address, int id, int type, double salary, int payment_type) {
+        editEmployee(name, address, id, type, payment_type);
+        this.salary = salary;
     }
 
     public double getSalary() {

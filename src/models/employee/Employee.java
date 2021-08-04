@@ -24,6 +24,14 @@ public class Employee {
         }
     }
 
+    public void editEmployee(String name, String address, int id, int type, int payment_type) {
+        this.name = name;
+        this.address = address;
+        this.id = id;
+        this.setType(type);
+        this.setPaymentType(payment_type);
+    }
+
     public void setLastPayment(int day, int month, int year) {
         this.last_payment = Calendar.getInstance();
         this.last_payment.set(Calendar.YEAR, year);

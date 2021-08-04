@@ -11,6 +11,11 @@ public class Syndicate {
         this.current_id = 0;
     }
 
+    public Syndicate(Syndicate syndicate) {
+        this.syndicate_employees = new HashMap<>(syndicate.syndicate_employees);
+        this.current_id = syndicate.current_id;
+    }
+
     public int createSyndicateEmployee() {
         SyndicateEmployee employee = new SyndicateEmployee(++current_id);
         this.syndicate_employees.put(employee.id, employee);

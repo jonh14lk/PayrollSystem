@@ -23,6 +23,14 @@ public class Utils {
         return x;
     }
 
+    public static int readCommand() {
+        System.out.println("\nPara obter uma lista com os comandos, digite 0");
+        System.out.println("Digite um comando:\n");
+        int command = readInt();
+        Utils.clearScreen();
+        return command;
+    }
+
     public static String readName() {
         System.out.println("Nome do funcionario:");
         String name = readString();
@@ -160,8 +168,9 @@ public class Utils {
         System.out.println("[5] - Lançar uma taxa de serviço");
         System.out.println("[6] - Alterar detalhes de um empregado");
         System.out.println("[7] - Rodar folha de pagamento");
-        System.out.println("[8] - Exibir empregados");
-        System.out.println("[9] - Sair da aplicação");
+        System.out.println("[8] - Undo");
+        System.out.println("[9] - Exibir empregados");
+        System.out.println("[10] - Sair da aplicação");
         System.out.println("");
     }
 

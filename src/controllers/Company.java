@@ -17,8 +17,8 @@ public class Company {
     private HashMap<Integer, Hourly> hourly;
     private HashMap<Integer, Salaried> salaried;
     private HashMap<Integer, Comissioned> comissioned;
-    Syndicate syndicate;
-    private int current_id;
+    public Syndicate syndicate;
+    public int current_id;
 
     public Company() {
         this.employees = new HashMap<>();
@@ -27,6 +27,15 @@ public class Company {
         this.comissioned = new HashMap<>();
         this.syndicate = new Syndicate();
         this.current_id = 0;
+    }
+
+    public Company(Company company) {
+        this.employees = new HashMap<>(company.employees);
+        this.hourly = new HashMap<>(company.hourly);
+        this.salaried = new HashMap<>(company.salaried);
+        this.comissioned = new HashMap<>(company.comissioned);
+        this.syndicate = new Syndicate(company.syndicate);
+        this.current_id = company.current_id;
     }
 
     public boolean createEmployee() {
@@ -73,7 +82,7 @@ public class Company {
 
         this.employees.put(employee.id, employee);
 
-        System.out.println("Funcionario criado com sucesso!");
+        System.out.println("Operação feita com sucesso!");
         employee.printEmployee();
         return true;
     }
@@ -93,8 +102,8 @@ public class Company {
         this.comissioned.remove(id);
         this.syndicate.removeSyndicateEmployee(employee.getSyndicateEmployeeId());
         this.employees.remove(id);
-        System.out.println("Funcionario removido com sucesso!\n");
 
+        System.out.println("Operação feita com sucesso!");
         return true;
     }
 
@@ -115,54 +124,62 @@ public class Company {
         String name = Utils.readName();
         String address = Utils.readAddress();
         int type = Utils.readEmployeeType();
+        int from_syndicate = Utils.readFromSyndicate();
         int payment_type = Utils.readPaymentType();
+        double salary = Utils.readSalary();
 
-        if (payment_type < 1 || payment_type > 3) {
+        if (from_syndicate < 0 || from_syndicate > 1 || payment_type < 1 || payment_type > 3) {
+            System.out.println("Entrada Invalida");
+            return false;
+        } else if (salary < 0.0 || type < 1 || type > 3) {
             System.out.println("Entrada Invalida");
             return false;
         }
 
-        int from_syndicate = 1;
+        Hourly hourly_employee = this.hourly.get(id);
+        Salaried salaried_employee = this.salaried.get(id);
+        Comissioned comissioned_employee = this.comissioned.get(id);
 
-        if (!employee.getSyndicate()) {
-            from_syndicate = Utils.readFromSyndicate();
-            if (from_syndicate < 0 && from_syndicate > 1) {
-                System.out.println("Entrada Inválida");
-                return false;
-            }
-        }
-
-        double salary = Utils.readSalary();
-        if (salary < 0.0) {
-            System.out.println("Salário não pode ser negativo");
-            return false;
+        this.hourly.remove(id);
+        this.salaried.remove(id);
+        this.comissioned.remove(id);
+        if (from_syndicate == 0) {
+            this.syndicate.removeSyndicateEmployee(employee.getSyndicateEmployeeId());
         }
 
         switch (type) {
             case 1:
-                Hourly hourly_employee = this.hourly.get(id);
-                hourly_employee = new Hourly(name, address, ++this.current_id, type, from_syndicate, this.syndicate,
-                        salary, payment_type);
+                if (hourly_employee == null) {
+                    hourly_employee = new Hourly(name, address, id, type, from_syndicate, this.syndicate, salary,
+                            payment_type);
+                }
+                hourly_employee.editHourly(name, address, id, type, salary, payment_type);
                 employee = hourly_employee;
+                this.hourly.put(id, hourly_employee);
                 break;
             case 2:
-                Salaried salaried_employee = this.salaried.get(id);
-                salaried_employee = new Salaried(name, address, ++this.current_id, type, from_syndicate, this.syndicate,
-                        salary, payment_type);
+                if (salaried_employee == null) {
+                    salaried_employee = new Salaried(name, address, id, type, from_syndicate, this.syndicate, salary,
+                            payment_type);
+                }
+                salaried_employee.editSalaried(name, address, id, type, salary, payment_type);
                 employee = salaried_employee;
+                this.salaried.put(id, salaried_employee);
                 break;
             case 3:
-                Comissioned comissioned_employee = this.comissioned.get(id);
-                comissioned_employee = new Comissioned(name, address, ++this.current_id, type, from_syndicate,
-                        this.syndicate, salary, payment_type);
+                if (comissioned_employee == null) {
+                    comissioned_employee = new Comissioned(name, address, id, type, from_syndicate, this.syndicate,
+                            salary, payment_type);
+                }
+                comissioned_employee.editComissioned(name, address, id, type, salary, payment_type);
                 employee = comissioned_employee;
+                this.comissioned.put(id, comissioned_employee);
                 break;
-            default:
-                System.out.println("O tipo de funcionario digitado não existe");
-                return false;
         }
 
-        System.out.println("Funcionario editado com sucesso!\n");
+        this.employees.put(id, employee);
+
+        System.out.println("Operação feita com sucesso!");
         return true;
     }
 

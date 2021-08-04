@@ -13,6 +13,10 @@ public class Comissioned extends Salaried {
         this.comission = 0.0;
     }
 
+    public void editComissioned(String name, String address, int id, int type, double salary, int payment_type) {
+        editSalaried(name, address, id, type, salary, payment_type);
+    }
+
     public boolean addComission(double value, double percentage) {
         if (value < 0.0) {
             System.out.println("O valor não pode ser negativo");

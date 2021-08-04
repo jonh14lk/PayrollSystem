@@ -2,18 +2,23 @@ package src.app;
 
 import src.controllers.Company;
 import src.utils.Utils;
+import java.util.Stack;
 
 public class App {
-    public App() {
-        Company company = new Company();
+    public void run() {
         Utils.clearScreen();
+        Company company = new Company();
+        Stack<Company> stack = new Stack<Company>();
 
         while (true) {
-            System.out.println("Para obter uma lista com os comandos, digite 0");
-            System.out.println("Digite um comando:\n");
-
-            int command = Utils.readInt();
+            int command = Utils.readCommand();
             boolean can_quit = false;
+
+            if (command >= 1 && command <= 7) {
+                Company previous = new Company(company);
+                stack.push(previous);
+                System.out.println(stack.peek().current_id);
+            }
 
             switch (command) {
                 case 0:
@@ -41,9 +46,12 @@ public class App {
                     company.RunPayroll();
                     break;
                 case 8:
-                    company.printEmployees();
+                    this.undoRedo(stack, company); // not working, needs deep copy
                     break;
                 case 9:
+                    company.printEmployees();
+                    break;
+                case 10:
                     System.out.println("Saindo...\n");
                     can_quit = true;
                     break;
@@ -54,6 +62,16 @@ public class App {
             if (can_quit) {
                 break;
             }
+        }
+    }
+
+    public void undoRedo(Stack<Company> stack, Company company) {
+        if (!stack.empty()) {
+            company = stack.peek();
+            stack.pop();
+            System.out.println("Undo realizado com sucesso");
+        } else {
+            System.out.println("Operação não pode ser realizada");
         }
     }
 }
