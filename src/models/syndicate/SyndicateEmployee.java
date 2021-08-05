@@ -1,6 +1,8 @@
 package src.models.syndicate;
 
-public class SyndicateEmployee {
+import java.io.Serializable;
+
+public class SyndicateEmployee implements Serializable {
     public int id;
     private double service_charge;
 

@@ -1,5 +1,10 @@
 package src.app;
 
+import java.util.Base64;
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
 import src.controllers.Company;
 import src.utils.Utils;
 import java.util.Stack;
@@ -8,16 +13,14 @@ public class App {
     public void run() {
         Utils.clearScreen();
         Company company = new Company();
-        Stack<Company> stack = new Stack<Company>();
+        Stack<String> stack = new Stack<String>();
 
         while (true) {
             int command = Utils.readCommand();
             boolean can_quit = false;
 
             if (command >= 1 && command <= 7) {
-                Company previous = new Company(company);
-                stack.push(previous);
-                System.out.println(stack.peek().current_id);
+                this.addCompany(stack, company);
             }
 
             switch (command) {
@@ -46,7 +49,7 @@ public class App {
                     company.RunPayroll();
                     break;
                 case 8:
-                    this.undoRedo(stack, company); // not working, needs deep copy
+                    company = undo(stack);
                     break;
                 case 9:
                     company.printEmployees();
@@ -65,13 +68,38 @@ public class App {
         }
     }
 
-    public void undoRedo(Stack<Company> stack, Company company) {
-        if (!stack.empty()) {
-            company = stack.peek();
-            stack.pop();
-            System.out.println("Undo realizado com sucesso");
-        } else {
+    public void addCompany(Stack<String> stack, Company company) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(company);
+            oos.close();
+            baos.close();
+            String to_store = Base64.getEncoder().encodeToString(baos.toByteArray());
+            stack.push(to_store);
+        } catch (Exception exception) {
+            System.out.println("Erro ao serializar");
+        }
+    }
+
+    public Company undo(Stack<String> stack) {
+        if (stack.empty()) {
             System.out.println("Operação não pode ser realizada");
+            return null;
+        }
+
+        String stored = stack.peek();
+        stack.pop();
+
+        try {
+            byte[] decoded = Base64.getDecoder().decode(stored);
+            ByteArrayInputStream bais = new ByteArrayInputStream(decoded);
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            System.out.println("Undo realizado com sucesso");
+            return (Company) ois.readObject();
+        } catch (Exception exception) {
+            System.out.println("Erro ao deserializar");
+            return null;
         }
     }
 }

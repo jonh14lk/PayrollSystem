@@ -1,9 +1,10 @@
 package src.models.employee;
 
+import java.io.Serializable;
 import src.models.syndicate.Syndicate;
 import java.util.Calendar;
 
-public class Employee {
+public class Employee implements Serializable {
     public String name, address;
     public int id;
     private boolean hourly, salaried, commissioned;

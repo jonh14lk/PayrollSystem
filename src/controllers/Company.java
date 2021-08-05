@@ -8,11 +8,12 @@ import src.models.syndicate.SyndicateEmployee;
 import src.models.syndicate.Syndicate;
 import src.utils.Utils;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Company {
+public class Company implements Serializable {
     private HashMap<Integer, Employee> employees;
     private HashMap<Integer, Hourly> hourly;
     private HashMap<Integer, Salaried> salaried;
@@ -27,15 +28,6 @@ public class Company {
         this.comissioned = new HashMap<>();
         this.syndicate = new Syndicate();
         this.current_id = 0;
-    }
-
-    public Company(Company company) {
-        this.employees = new HashMap<>(company.employees);
-        this.hourly = new HashMap<>(company.hourly);
-        this.salaried = new HashMap<>(company.salaried);
-        this.comissioned = new HashMap<>(company.comissioned);
-        this.syndicate = new Syndicate(company.syndicate);
-        this.current_id = company.current_id;
     }
 
     public boolean createEmployee() {
