@@ -49,7 +49,7 @@ public class App {
                     company.RunPayroll();
                     break;
                 case 8:
-                    company = undo(stack);
+                    company = this.undo(stack);
                     break;
                 case 9:
                     company.printEmployees();
