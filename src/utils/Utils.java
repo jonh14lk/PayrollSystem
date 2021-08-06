@@ -1,5 +1,12 @@
 package src.utils;
 
+import java.util.Base64;
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+import src.controllers.Company;
+import java.util.Stack;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -19,7 +26,7 @@ public class Utils {
     }
 
     public static String readString() {
-        String x = Utils.scan.nextLine();
+        String x = scan.nextLine();
         return x;
     }
 
@@ -27,7 +34,7 @@ public class Utils {
         System.out.println("\nPara obter uma lista com os comandos, digite 0");
         System.out.println("Digite um comando:\n");
         int command = readInt();
-        Utils.clearScreen();
+        clearScreen();
         return command;
     }
 
@@ -86,7 +93,7 @@ public class Utils {
 
     public static double readServiceCharge() {
         System.out.println("Digite o valor da taxa de serviço:");
-        double charge = Utils.readDouble();
+        double charge = readDouble();
         return charge;
     }
 
@@ -118,6 +125,35 @@ public class Utils {
         x.set(Calendar.MONTH, month);
         x.set(Calendar.DAY_OF_MONTH, day);
         return x;
+    }
+
+    public static int readPaymentSchedule() {
+        System.out.println("Digite o tipo de agenda de pagamento");
+        System.out.println("[1] - Semanalmente");
+        System.out.println("[2] - Mensalmente");
+        System.out.println("[3] - Bi-semanalmente");
+        int payment_schedule = readInt();
+        return payment_schedule;
+    }
+
+    public static void printHelp() {
+        System.out.println("[0] - Ajuda");
+        System.out.println("[1] - Adicionar empregado");
+        System.out.println("[2] - Remoção de um empregado");
+        System.out.println("[3] - Lançar um cartão de ponto");
+        System.out.println("[4] - Lançar uma resultado venda");
+        System.out.println("[5] - Lançar uma taxa de serviço");
+        System.out.println("[6] - Alterar detalhes de um empregado");
+        System.out.println("[7] - Rodar folha de pagamento");
+        System.out.println("[8] - Undo");
+        System.out.println("[9] - Mudar agenda de pagamento");
+        System.out.println("[10] - Exibir empregados");
+        System.out.println("[11] - Sair da aplicação\n");
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     public static boolean compareDates(Calendar a, Calendar b) {
@@ -159,23 +195,38 @@ public class Utils {
         return (month != new_month);
     }
 
-    public static void printHelp() {
-        System.out.println("[0] - Ajuda");
-        System.out.println("[1] - Adicionar empregado");
-        System.out.println("[2] - Remoção de um empregado");
-        System.out.println("[3] - Lançar um cartão de ponto");
-        System.out.println("[4] - Lançar uma resultado venda");
-        System.out.println("[5] - Lançar uma taxa de serviço");
-        System.out.println("[6] - Alterar detalhes de um empregado");
-        System.out.println("[7] - Rodar folha de pagamento");
-        System.out.println("[8] - Undo");
-        System.out.println("[9] - Exibir empregados");
-        System.out.println("[10] - Sair da aplicação");
-        System.out.println("");
+    public static void addCompany(Stack<String> stack, Company company) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(company);
+            oos.close();
+            baos.close();
+            String to_store = Base64.getEncoder().encodeToString(baos.toByteArray());
+            stack.push(to_store);
+        } catch (Exception exception) {
+            System.out.println("Erro ao serializar");
+        }
     }
 
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+    public static Company undo(Stack<String> stack) {
+        if (stack.empty()) {
+            System.out.println("Operação não pode ser realizada");
+            return null;
+        }
+
+        String stored = stack.peek();
+        stack.pop();
+
+        try {
+            byte[] decoded = Base64.getDecoder().decode(stored);
+            ByteArrayInputStream bais = new ByteArrayInputStream(decoded);
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            System.out.println("Undo realizado com sucesso");
+            return (Company) ois.readObject();
+        } catch (Exception exception) {
+            System.out.println("Erro ao deserializar");
+            return null;
+        }
     }
 }

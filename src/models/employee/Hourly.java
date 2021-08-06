@@ -5,20 +5,18 @@ import src.models.syndicate.SyndicateEmployee;
 import java.util.Calendar;
 
 public class Hourly extends Employee {
-    private int hours, extra_hours;
-    private double hour_value;
+    private int hours;
+    private int extra_hours;
 
     public Hourly(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate, double salary,
             int payment_type) {
-        super(name, address, id, type, from_syndicate, syndicate, payment_type);
-        this.hour_value = salary;
+        super(name, address, id, type, from_syndicate, syndicate, payment_type, salary, 1);
         this.hours = 0;
         this.extra_hours = 0;
     }
 
     public void editHourly(String name, String address, int id, int type, double salary, int payment_type) {
-        editEmployee(name, address, id, type, payment_type);
-        this.hour_value = salary;
+        editEmployee(name, address, id, type, payment_type, salary, 1);
     }
 
     public boolean addHours(int hours) {
@@ -48,7 +46,8 @@ public class Hourly extends Employee {
         System.out.println("Tipo: Horista");
         System.out.println("Horas Normais: " + this.hours);
         System.out.println("Horas Extras: " + this.extra_hours);
-        this.printPaymentType();
+        System.out.println("Forma de pagamento: " + this.getPaymentType());
+        System.out.println("Agenda de pagamento: " + this.getPaymentSchedule());
         if (getSyndicate()) {
             System.out.println("Id do funcionario no sindicato: " + getSyndicateEmployeeId());
         }
@@ -59,9 +58,9 @@ public class Hourly extends Employee {
         System.out.println("Nome: " + this.name);
         System.out.println("Id: " + this.id);
         System.out.println("Tipo: Horista");
-        printPaymentType();
+        System.out.println("Forma de pagamento: " + this.getPaymentType());
 
-        double value = (this.hour_value * this.hours) + (1.5 * this.extra_hours * this.hour_value);
+        double value = (this.getSalary() * this.hours) + (1.5 * this.extra_hours * this.getSalary());
 
         if (getSyndicate()) {
             SyndicateEmployee employee = syndicate.syndicate_employees.get(this.getSyndicateEmployeeId());

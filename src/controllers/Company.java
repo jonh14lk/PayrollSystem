@@ -245,33 +245,46 @@ public class Company implements Serializable {
     public void RunPayroll() {
         Calendar current_date = Utils.readDate();
 
-        if (current_date.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-            for (Map.Entry<Integer, Hourly> e : this.hourly.entrySet()) {
-                Hourly employee = e.getValue();
-                if (Utils.dateDiff(employee.getLastPayment(), current_date) >= 7) {
-                    employee.payEmployee(current_date, syndicate);
-                    System.out.println("");
-                }
+        for (Map.Entry<Integer, Employee> e : this.employees.entrySet()) {
+            Employee employee = e.getValue();
+
+            if (employee.getPaymentSchedule() == "Semanalmente"
+                    && current_date.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
+                    && Utils.dateDiff(employee.getLastPayment(), current_date) >= 7) {
+                employee.payEmployee(current_date, syndicate);
+                System.out.println("");
             }
 
-            for (Map.Entry<Integer, Comissioned> e : this.comissioned.entrySet()) {
-                Comissioned employee = e.getValue();
-                if (Utils.dateDiff(employee.getLastPayment(), current_date) >= 14) {
-                    employee.payEmployee(current_date, syndicate);
-                    System.out.println("");
-                }
+            if (employee.getPaymentSchedule() == "Mensalmente" && Utils.LastBussinessDay(current_date)
+                    && Utils.dateDiff(employee.getLastPayment(), current_date) > 0) {
+                employee.payEmployee(current_date, syndicate);
+                System.out.println("");
             }
+
+            if (employee.getPaymentSchedule() == "Bi-semanalmente"
+                    && current_date.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
+                    && Utils.dateDiff(employee.getLastPayment(), current_date) >= 14) {
+                employee.payEmployee(current_date, syndicate);
+                System.out.println("");
+            }
+        }
+    }
+
+    public boolean changePaymentSchedule() {
+        int id = Utils.readId();
+        int payment_schedule = Utils.readPaymentSchedule();
+
+        if (!this.syndicate.syndicate_employees.containsKey(id)) {
+            System.out.println("O id do funcionario não existe");
+            return false;
+        } else if (payment_schedule < 1 || payment_schedule > 3) {
+            System.out.println("Entrada inválida");
+            return false;
         }
 
-        if (Utils.LastBussinessDay(current_date)) {
-            for (Map.Entry<Integer, Salaried> e : this.salaried.entrySet()) {
-                Salaried employee = e.getValue();
-                if (Utils.dateDiff(employee.getLastPayment(), current_date) > 0) {
-                    employee.payEmployee(current_date, syndicate);
-                    System.out.println("");
-                }
-            }
-        }
+        Employee employee = this.employees.get(id);
+        employee.setPaymentSchedule(payment_schedule);
+        return true;
     }
 
     public void printEmployees() {
