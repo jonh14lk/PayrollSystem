@@ -2,6 +2,8 @@ package src.models.employee;
 
 import java.io.Serializable;
 import src.models.syndicate.Syndicate;
+import src.utils.Utils;
+import src.models.payment.Schedule;
 import java.util.Calendar;
 
 public class Employee implements Serializable {
@@ -14,12 +16,12 @@ public class Employee implements Serializable {
     private boolean from_syndicate;
     private int syndicate_employee_id;
     private int payment_type;
-    private int payment_schedule;
+    private Schedule payment_schedule;
     private double salary;
     private Calendar last_payment;
 
     public Employee(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate,
-            int payment_type, double salary, int payment_schedule) {
+            int payment_type, double salary, String payment_schedule) {
         this.name = name;
         this.address = address;
         this.id = id;
@@ -34,7 +36,7 @@ public class Employee implements Serializable {
     }
 
     public void editEmployee(String name, String address, int id, int type, int payment_type, double salary,
-            int payment_schedule) {
+            String payment_schedule) {
         this.name = name;
         this.address = address;
         this.id = id;
@@ -44,24 +46,18 @@ public class Employee implements Serializable {
         this.setPaymentType(payment_type);
     }
 
-    public boolean setPaymentSchedule(int payment_schedule) {
-        if (payment_schedule >= 1 || payment_schedule <= 3) {
-            this.payment_schedule = payment_schedule;
-            return true;
-        }
-        return false;
+    public void setPaymentSchedule(String str) {
+        System.out.println(str);
+        Schedule payment_schedule = Utils.parsePaymentSchedule(str);
+        this.payment_schedule = payment_schedule;
     }
 
-    public String getPaymentSchedule() {
-        switch (this.payment_schedule) {
-            case 1:
-                return "Semanalmente";
-            case 2:
-                return "Mensalmente";
-            case 3:
-                return "Bi-semanalmente";
-        }
-        return "";
+    public void setPaymentSchedule(Schedule payment_schedule) {
+        this.payment_schedule = payment_schedule;
+    }
+
+    public Schedule getPaymentSchedule() {
+        return this.payment_schedule;
     }
 
     public boolean setSalary(double salary) {

@@ -8,11 +8,11 @@ public class Salaried extends Employee {
 
     public Salaried(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate,
             double salary, int payment_type) {
-        super(name, address, id, type, from_syndicate, syndicate, payment_type, salary, 2);
+        super(name, address, id, type, from_syndicate, syndicate, payment_type, salary, "mensal $");
     }
 
     public void editSalaried(String name, String address, int id, int type, double salary, int payment_type) {
-        editEmployee(name, address, id, type, payment_type, salary, 2);
+        editEmployee(name, address, id, type, payment_type, salary, "mensal $");
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Salaried extends Employee {
         System.out.println("Tipo: Assalariado");
         System.out.println("Salário: " + this.getSalary());
         System.out.println("Forma de pagamento: " + this.getPaymentType());
-        System.out.println("Agenda de pagamento: " + this.getPaymentSchedule());
+        System.out.println("Agenda de pagamento: " + this.getPaymentSchedule().toString());
         if (getSyndicate()) {
             System.out.println("Id do funcionario no sindicato: " + getSyndicateEmployeeId());
         }

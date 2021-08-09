@@ -14,7 +14,7 @@ public class App {
             int command = Utils.readCommand();
             boolean can_quit = false;
 
-            if (command != 8 && command != 10 && command <= 11) {
+            if (command != 8 && command <= 10) {
                 Utils.addCompany(stack, company);
             }
 
@@ -50,9 +50,12 @@ public class App {
                     company.changePaymentSchedule();
                     break;
                 case 10:
-                    company.printEmployees();
+                    company.addPaymentSchedule();
                     break;
                 case 11:
+                    company.printEmployees();
+                    break;
+                case 12:
                     System.out.println("Saindo...\n");
                     can_quit = true;
                     break;

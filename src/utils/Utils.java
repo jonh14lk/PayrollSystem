@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import src.controllers.Company;
+import src.models.payment.Schedule;
 import java.util.Stack;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -126,12 +127,27 @@ public class Utils {
         return x;
     }
 
-    public static int readPaymentSchedule() {
+    public static Schedule readPaymentSchedule() {
         System.out.println("Digite o tipo de agenda de pagamento");
-        System.out.println("[1] - Semanalmente");
-        System.out.println("[2] - Mensalmente");
-        System.out.println("[3] - Bi-semanalmente");
-        int payment_schedule = readInt();
+        String payment_schedule = readString();
+        return parsePaymentSchedule(payment_schedule);
+    }
+
+    public static Schedule parsePaymentSchedule(String str) {
+        String[] parsed = str.split(" ");
+        Schedule payment_schedule = new Schedule();
+        if (parsed.length == 2 && parsed[0].equals("mensal")) {
+            payment_schedule.setTimeGap(parsed[0]);
+            if (parsed[1].equals("$")) {
+                payment_schedule.setDay(50);
+            } else {
+                payment_schedule.setDay(Integer.parseInt(parsed[1]));
+            }
+        } else if (parsed.length == 3 && parsed[0].equals("semanal")) {
+            payment_schedule.setTimeGap(parsed[0]);
+            payment_schedule.setDay(Integer.parseInt(parsed[1]));
+            payment_schedule.setWeekDay(parsed[2]);
+        }
         return payment_schedule;
     }
 
@@ -146,8 +162,9 @@ public class Utils {
         System.out.println("[7] - Rodar folha de pagamento");
         System.out.println("[8] - Undo");
         System.out.println("[9] - Mudar agenda de pagamento");
-        System.out.println("[10] - Exibir empregados");
-        System.out.println("[11] - Sair da aplicação\n");
+        System.out.println("[10] - Adicionar agenda de pagamento");
+        System.out.println("[11] - Exibir empregados");
+        System.out.println("[12] - Sair da aplicação\n");
     }
 
     public static void clearScreen() {
