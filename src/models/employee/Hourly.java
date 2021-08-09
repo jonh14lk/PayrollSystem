@@ -46,6 +46,7 @@ public class Hourly extends Employee {
         System.out.println("Tipo: Horista");
         System.out.println("Horas Normais: " + this.hours);
         System.out.println("Horas Extras: " + this.extra_hours);
+        System.out.println("Salário por hora: " + this.getSalary());
         System.out.println("Forma de pagamento: " + this.getPaymentType());
         System.out.println("Agenda de pagamento: " + this.getPaymentSchedule());
         if (getSyndicate()) {

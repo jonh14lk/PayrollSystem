@@ -21,7 +21,7 @@ public class Salaried extends Employee {
         System.out.println("Endereço: " + this.address);
         System.out.println("Id: " + this.id);
         System.out.println("Tipo: Assalariado");
-        System.out.println("Salario: " + this.getSalary());
+        System.out.println("Salário: " + this.getSalary());
         System.out.println("Forma de pagamento: " + this.getPaymentType());
         System.out.println("Agenda de pagamento: " + this.getPaymentSchedule());
         if (getSyndicate()) {

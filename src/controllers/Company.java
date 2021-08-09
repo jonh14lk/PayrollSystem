@@ -288,6 +288,10 @@ public class Company implements Serializable {
     }
 
     public void printEmployees() {
+        if (this.employees.size() == 0) {
+            System.out.println("Não há nenhum empregado no sistema");
+            return;
+        }
         for (Map.Entry<Integer, Employee> e : this.employees.entrySet()) {
             Employee employee = e.getValue();
             employee.printEmployee();

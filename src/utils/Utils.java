@@ -34,7 +34,6 @@ public class Utils {
         System.out.println("\nPara obter uma lista com os comandos, digite 0");
         System.out.println("Digite um comando:\n");
         int command = readInt();
-        clearScreen();
         return command;
     }
 

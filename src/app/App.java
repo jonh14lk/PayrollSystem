@@ -14,7 +14,7 @@ public class App {
             int command = Utils.readCommand();
             boolean can_quit = false;
 
-            if (command >= 1 && command <= 7) {
+            if (command != 8 && command != 10 && command <= 11) {
                 Utils.addCompany(stack, company);
             }
 

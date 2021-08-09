@@ -10,13 +10,13 @@ public class Comissioned extends Salaried {
     public Comissioned(String name, String address, int id, int type, int from_syndicate, Syndicate syndicate,
             double salary, int payment_type) {
         super(name, address, id, type, from_syndicate, syndicate, salary, payment_type);
-        setPaymentType(3);
+        this.setPaymentSchedule(3);
         this.comission = 0.0;
     }
 
     public void editComissioned(String name, String address, int id, int type, double salary, int payment_type) {
         editSalaried(name, address, id, type, salary, payment_type);
-        setPaymentType(3);
+        this.setPaymentSchedule(3);
     }
 
     public boolean addComission(double value, double percentage) {
@@ -40,7 +40,7 @@ public class Comissioned extends Salaried {
         System.out.println("Endereço: " + this.address);
         System.out.println("Id: " + this.id);
         System.out.println("Tipo: Comissionado");
-        System.out.println("Salario: " + this.getSalary());
+        System.out.println("Salário: " + this.getSalary());
         System.out.println("Comissão: " + this.comission);
         System.out.println("Forma de pagamento: " + this.getPaymentType());
         System.out.println("Agenda de pagamento: " + this.getPaymentSchedule());
