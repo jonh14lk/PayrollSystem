@@ -47,7 +47,6 @@ public class Employee implements Serializable {
     }
 
     public void setPaymentSchedule(String str) {
-        System.out.println(str);
         Schedule payment_schedule = Utils.parsePaymentSchedule(str);
         this.payment_schedule = payment_schedule;
     }
